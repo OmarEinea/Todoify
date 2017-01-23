@@ -22,10 +22,10 @@
 		<!-- Page title -->
 		<title>New Tab</title>
 	</head>
-	<body ng-app="Todoify">
+	<body ng-app="Todoify" ng-cloak>
 		<style ng-controller="Background">
 			body {
-				background-image: url(img/{{ getWall() }});
+				background-image: url(img/{{ wall }});
 			}
 		</style>
 	</body>
