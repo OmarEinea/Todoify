@@ -28,5 +28,8 @@
 				background-image: url(img/{{ wall }});
 			}
 		</style>
+		<div id="time" ng-controller="Time">
+			{{ percent > 100 ? '+' + percent % 100 : percent }}<span style="font-size: .3em">%</span>
+		</div>
 	</body>
 </html>

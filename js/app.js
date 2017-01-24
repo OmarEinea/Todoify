@@ -13,4 +13,14 @@ angular.module("Todoify", ["ngMaterial"])
 		}
 		$scope.wall = $ls.wallPath;
 	})();
+})
+
+.controller("Time", function($scope, $interval) {
+	// Store milliseconds of today at 10am until 11:30pm
+	var todayStart = (new Date()).setHours(10, 0, 0, 0);
+	var workHours = 36000 * 13.5;
+	($scope.updateTime = function() {
+		$scope.percent = Math.round((Date.now() - todayStart) / workHours);
+	})();
+	$interval($scope.updateTime, 30000);
 });
