@@ -1,5 +1,9 @@
 angular.module("Todoify", ["ngMaterial"])
 
+.config(function($mdAriaProvider) {
+	$mdAriaProvider.disableWarnings();
+})
+
 .factory("$ls", function($window) {
 	return $window.localStorage;
 })
@@ -23,4 +27,13 @@ angular.module("Todoify", ["ngMaterial"])
 		$scope.percent = Math.round((Date.now() - todayStart) / workHours);
 	})();
 	$interval($scope.updateTime, 30000);
+})
+
+.controller("Todos", function($scope, $timeout, $interval) {
+	$scope.state = false;
+	$scope.todos = [];
+	$scope.keepOpen = function($event) {
+		if($event.target.nodeName != "MD-ICON")
+			$timeout(function() { $scope.state = true; }, 10);
+	};
 });

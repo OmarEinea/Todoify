@@ -24,14 +24,40 @@
 		<!-- Page title -->
 		<title>New Tab</title>
 	</head>
-	<body ng-app="Todoify" ng-cloak>
+	<body ng-app="Todoify" layout="row" ng-cloak>
 		<style ng-controller="Background">
 			body {
 				background-image: url(img/{{ wall }});
 			}
 		</style>
 		<div id="time" ng-controller="Time">
-			{{ percent > 100 ? '+' + percent % 100 : percent }}<span style="font-size: .3em">%</span>
+			{{ percent > 100 ? '+' + percent % 100 : percent }}
+		</div>
+		<div ng-controller="Todos" flex-offset="80" flex="20" layout="column" layout-align="end stretch">
+			<md-card ng-repeat="todo in todos track by $index">
+				<md-card-title>
+					<md-card-title-text>
+						<span class="md-headline">{{ todo }}</span>
+					</md-card-title-text>
+				</md-card-title>
+			</md-card>
+			<md-fab-toolbar id="fab" md-open="state" md-direction="left">
+				<md-fab-trigger class="align-with-text">
+					<md-button class="md-fab" md-colors="::{background: 'grey-50'}">
+				        <md-icon md-colors="{color: 'grey-700'}" md-font-icon="fa fa-pencil fa-lg"></md-icon>
+					</md-button>
+				</md-fab-trigger>
+				<md-toolbar ng-click="keepOpen($event)">
+					<md-fab-actions class="md-toolbar-tools">
+						<md-button ng-click="todos.push(todo); todo = ''" class="md-icon-button" md-colors="::{color: 'grey-700'}">
+							<md-icon md-colors="{color: 'grey-700'}" md-font-icon="fa fa-plus fa-lg"></md-icon>
+						</md-button>
+						<md-input-container md-no-float class="md-block">
+							<input ng-model="todo" type="text" placeholder="New Todo">
+						</md-input-container>
+					</md-fab-actions>
+				</md-toolbar>
+			</md-fab-toolbar>
 		</div>
 	</body>
 </html>

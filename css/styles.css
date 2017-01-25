@@ -22,3 +22,41 @@ body {
 	text-shadow: 0 1px 5px rgba(0, 0, 0, .1);
 	transform: translate(-50%, -50%);
 }
+
+#time:after {
+	content: '%';
+	margin-left: -.7em;
+	font-size: .3em;
+}
+
+#fab .md-fab.md-button,
+#fab .md-fab-action-item:first-of-type .md-button {
+	margin-right: 0;
+}
+
+#fab .md-fab-toolbar-wrapper {
+	margin: 8px;
+	border-radius: 2px;
+}
+
+#fab.md-is-open .md-fab-toolbar-wrapper {
+		box-shadow: 0 1px 3px 0 rgba(0,0,0,.2),
+		0 1px 1px 0 rgba(0,0,0,.14),
+		0 2px 1px -1px rgba(0,0,0,.12);
+
+}
+
+#fab .md-toolbar-tools {
+	padding: 0 16px;
+}
+
+#fab .md-fab-action-item:last-of-type,
+#fab .md-fab-action-item:last-of-type md-input-container {
+	margin: 0;
+	flex: auto;
+	height: 42px;
+}
+
+md-card md-card-title {
+	padding: 16px;
+}
