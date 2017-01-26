@@ -29,6 +29,11 @@ body {
 	font-size: .3em;
 }
 
+div[ng-controller=Todos] {
+	margin-right: 8px;
+	margin-bottom: 8px;
+}
+
 #fab .md-fab.md-button,
 #fab .md-fab-action-item:first-of-type .md-button {
 	margin-right: 0;

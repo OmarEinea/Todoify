@@ -1,21 +1,22 @@
-angular.module("Todoify", ["ngMaterial"])
+angular.module("Todoify", ["ngMaterial", "LocalStorageModule"])
 
-.config(function($mdAriaProvider) {
+.config(function($mdAriaProvider, localStorageServiceProvider) {
 	$mdAriaProvider.disableWarnings();
+	localStorageServiceProvider.setPrefix('');
 })
 
-.factory("$ls", function($window) {
-	return $window.localStorage;
+.factory("$ls", function(localStorageService) {
+	return localStorageService;
 })
 
 .controller("Background", function($scope, $ls) {
 	$scope.interval = 60000 * 30;
 	($scope.getWall = function() {
-		if(!$ls.wallPath || Date.now() - $ls.wallDate > $scope.interval) {
-			$ls.wallPath = walls[Math.floor(Math.random() * walls.length)];
-			$ls.wallDate = Date.now();
+		if(!$ls.get("wall") || Date.now() - $ls.get("wallDate") > $scope.interval) {
+			$ls.set("wall", walls[Math.floor(Math.random() * walls.length)]);
+			$ls.set("wallDate", Date.now())	;
 		}
-		$scope.wall = $ls.wallPath;
+		$ls.bind($scope, "wall");
 	})();
 })
 
@@ -29,9 +30,9 @@ angular.module("Todoify", ["ngMaterial"])
 	$interval($scope.updateTime, 30000);
 })
 
-.controller("Todos", function($scope, $timeout, $interval) {
-	$scope.state = false;
-	$scope.todos = [];
+.controller("Todos", function($scope, $timeout, $ls) {
+	if(!$ls.get("todos")) $ls.set("todos", []);
+	$ls.bind($scope, "todos");
 	$scope.keepOpen = function($event) {
 		if($event.target.nodeName != "MD-ICON")
 			$timeout(function() { $scope.state = true; }, 10);
