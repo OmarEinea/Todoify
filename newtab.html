@@ -35,11 +35,15 @@
 		<div id="time" ng-controller="Time">
 			{{ percent > 100 ? '+' + percent % 100 : percent }}
 		</div>
-		<div ng-controller="Todos" flex-offset="80" flex="20" layout="column" layout-align="end stretch">
+		<span flex></span>
+		<div ng-controller="Todos" flex="initial" layout="column" layout-align="end stretch">
 			<md-card ng-repeat="todo in todos track by $index">
 				<md-card-title>
-					<md-card-title-text>
+					<md-card-title-text layout="row" layout-align="space-between center">
 						<span class="md-headline">{{ todo }}</span>
+						<md-button id="$index" ng-click="remove($index)" class="md-icon-button" style="margin-right: -8px">
+							<md-icon md-colors="::{color: 'grey-700'}" md-font-icon="fa fa-times fa-lg"></md-icon>
+						</md-button>
 					</md-card-title-text>
 				</md-card-title>
 			</md-card>
@@ -51,12 +55,14 @@
 				</md-fab-trigger>
 				<md-toolbar ng-click="keepOpen($event)">
 					<md-fab-actions class="md-toolbar-tools">
-						<md-button ng-click="todos.push(todo); todo = ''" class="md-icon-button" md-colors="::{color: 'grey-700'}">
-							<md-icon md-colors="{color: 'grey-700'}" md-font-icon="fa fa-plus fa-lg"></md-icon>
+						<md-button class="md-icon-button" style="margin-right: -8px">
+							<md-icon md-colors="::{color: 'grey-700'}" md-font-icon="fa fa-times fa-lg"></md-icon>
 						</md-button>
-						<md-input-container md-no-float class="md-block">
-							<input ng-model="todo" type="text" placeholder="New Todo">
-						</md-input-container>
+						<form ng-submit="todos.push(todo); todo = ''">
+							<md-input-container md-no-float class="md-block">
+								<input ng-model="todo" type="text" placeholder="New Todo">
+							</md-input-container>
+						</form>
 					</md-fab-actions>
 				</md-toolbar>
 			</md-fab-toolbar>

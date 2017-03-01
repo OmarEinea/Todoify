@@ -9,15 +9,18 @@ angular.module("Todoify", ["ngMaterial", "LocalStorageModule"])
 	return localStorageService;
 })
 
-.controller("Background", function($scope, $ls) {
-	$scope.interval = 60000 * 30;
-	($scope.getWall = function() {
-		if(!$ls.get("wall") || Date.now() - $ls.get("wallDate") > $scope.interval) {
-			$ls.set("wall", walls[Math.floor(Math.random() * walls.length)]);
-			$ls.set("wallDate", Date.now())	;
-		}
-		$ls.bind($scope, "wall");
-	})();
+.controller("Background", function($scope, $ls, $timeout, $interval) {
+	// Time to next change (change interval)
+	var timeToChange = 60000 * 30;
+	function changeWall() {
+		$ls.set("wall", walls[Math.floor(Math.random() * walls.length)]);
+		$ls.set("wallDate", Date.now())	;
+	}
+	if(!$ls.get("wall") || Date.now() - $ls.get("wallDate") > timeToChange) {
+		changeWall();
+	}
+	$ls.bind($scope, "wall");
+	$timeout(function() {}, Date.now() - $ls.get("wallDate"));
 })
 
 .controller("Time", function($scope, $interval) {
@@ -35,6 +38,9 @@ angular.module("Todoify", ["ngMaterial", "LocalStorageModule"])
 	$ls.bind($scope, "todos");
 	$scope.keepOpen = function($event) {
 		if($event.target.nodeName != "MD-ICON")
-			$timeout(function() { $scope.state = true; }, 10);
+			$timeout(function() { $scope.state = true }, 10);
+	};
+	$scope.remove = function(index) {
+		$scope.todos.splice(index, 1)
 	};
 });
