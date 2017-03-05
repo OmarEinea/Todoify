@@ -39,11 +39,11 @@ angular.module("Todoify", ["ngMaterial", "LocalStorageModule"])
 })
 
 .controller("Todos", function($scope, $timeout, $ls) {
+    $scope.date = new Date();
 	if(!$ls.get("todos")) $ls.set("todos", []);
 	$ls.bind($scope, "todos");
-	$scope.keepOpen = function($event) {
-		if($event.target.nodeName != "MD-ICON")
-			$timeout(function() { $scope.state = true }, 10);
+	$scope.keepOpen = function() {
+		$timeout(function() { $scope.state = true }, 10);
 	};
 	$scope.remove = function(index) {
 		$scope.todos.splice(index, 1)
