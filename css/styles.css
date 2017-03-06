@@ -45,10 +45,9 @@ div[ng-controller=Todos] {
 }
 
 #fab.md-is-open .md-fab-toolbar-wrapper {
-		box-shadow: 0 1px 3px 0 rgba(0,0,0,.2),
-		0 1px 1px 0 rgba(0,0,0,.14),
-		0 2px 1px -1px rgba(0,0,0,.12);
-
+	box-shadow: 0 1px 3px 0 rgba(0,0,0,.2),
+	0 1px 1px 0 rgba(0,0,0,.14),
+	0 2px 1px -1px rgba(0,0,0,.12);
 }
 
 #fab .md-toolbar-tools {
@@ -62,6 +61,20 @@ div[ng-controller=Todos] {
 	height: 42px;
 }
 
-md-card md-card-title {
-	padding: 16px;
+md-datepicker {
+	margin-right: -164px !important;
+}
+
+md-datepicker md-icon {
+	color: grey !important;
+	fill: grey !important;
+}
+
+.md-datepicker-input-container {
+	opacity: 0;
+}
+
+.md-datepicker-calendar-pane {
+	margin-left: -1px;
+	margin-top: -4px;
 }

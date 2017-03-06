@@ -40,30 +40,26 @@
 		<div ng-controller="Prayer"></div>
 		<span flex></span>
 		<div ng-controller="Todos" flex="initial" layout="column" layout-align="end stretch">
-			<md-card ng-repeat="todo in todos track by $index">
-				<md-card-title>
-					<md-card-title-text layout="row" layout-align="space-between center">
-						<span class="md-headline">{{ todo }}</span>
-						<md-button id="$index" ng-click="remove($index)" class="md-icon-button" style="margin-right: -8px">
-							<md-icon md-colors="::{color: 'grey-700'}" md-font-icon="fa fa-times fa-lg"></md-icon>
-						</md-button>
-					</md-card-title-text>
-				</md-card-title>
+			<md-card md-colors="::{background: 'grey-50'}">
+				<md-list-item ng-repeat="todo in todos track by $index" class="md-2-line" ng-dblclick="remove($index)">
+					<div class="md-list-item-text" layout="column">
+						<h3>{{ todo.text }}</h3>
+						<p>{{ todo.date }}</p>
+					</div>
+				</md-list-item>
 			</md-card>
 			<md-fab-toolbar id="fab" md-open="state" md-direction="left">
-				<md-fab-trigger class="align-with-text">
+				<md-fab-trigger>
 					<md-button class="md-fab" md-colors="::{background: 'grey-50'}">
-				        <md-icon md-colors="{color: 'grey-700'}" md-font-icon="fa fa-pencil fa-lg"></md-icon>
+						<md-icon md-colors="::{color: 'grey-700'}" md-font-icon="fa fa-pencil fa-lg"></md-icon>
 					</md-button>
 				</md-fab-trigger>
-				<md-toolbar ng-click="keepOpen($event)">
+				<md-toolbar ng-click="keepOpen()">
 					<md-fab-actions class="md-toolbar-tools">
-						<md-button class="md-icon-button" style="margin-right: -8px">
-							<md-icon md-colors="::{color: 'grey-700'}" md-font-icon="fa fa-times fa-lg"></md-icon>
-						</md-button>
-						<form ng-submit="todos.push(todo); todo = ''">
+						<md-datepicker ng-model="todo.date" md-is-open="open"></md-datepicker>
+						<form ng-submit="add()">
 							<md-input-container md-no-float class="md-block">
-								<input ng-model="todo" type="text" placeholder="New Todo">
+								<input ng-model="todo.text" type="text" placeholder="New Todo">
 							</md-input-container>
 						</form>
 					</md-fab-actions>

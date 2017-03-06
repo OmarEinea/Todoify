@@ -10,12 +10,12 @@ angular.module("Todoify", ["ngMaterial", "LocalStorageModule"])
 })
 
 .factory("$calc", function() {
-    return function(time) {
-        if(typeof(time) == "string") {
-            time = time.split(":");
-            return +time[1] + time[0] * 60;
-        } else return time.getMinutes() + time.getHours() * 60;
-    };
+	return function(time) {
+		if(typeof(time) == "string") {
+			time = time.split(":");
+			return +time[1] + time[0] * 60;
+		} else return time.getMinutes() + time.getHours() * 60;
+	};
 })
 
 .controller("Background", function($scope, $ls, $interval) {
@@ -38,20 +38,28 @@ angular.module("Todoify", ["ngMaterial", "LocalStorageModule"])
 	$interval($scope.updateTime, 30000);
 })
 
-.controller("Todos", function($scope, $timeout, $ls) {
-    $scope.date = new Date();
+.controller("Todos", function($scope, $ls, $timeout, $interval) {
 	if(!$ls.get("todos")) $ls.set("todos", []);
 	$ls.bind($scope, "todos");
-	$scope.keepOpen = function() {
-		$timeout(function() { $scope.state = true }, 10);
+	($scope.clear = function() {
+		$scope.todo = { text: '', date: null };
+	})();
+	$scope.add = function() {
+		var d = $scope.todo.date;
+		$scope.todo.date = d ? d.getDate() + '/' + (d.getMonth() + 1) : "Indefinite";
+		$scope.todos.push($scope.todo);
+		$scope.clear();
 	};
 	$scope.remove = function(index) {
-		$scope.todos.splice(index, 1)
+		$scope.todos.splice(index, 1);
+	};
+	$scope.keepOpen = function() {
+		$interval(function() { $scope.state = true }, 10);
 	};
 })
 
 .controller("Prayer", function($scope, $calc) {
-    var times = [], cells = document.getElementsByClassName("MPtimetable")[0].getElementsByTagName("td");
-    for(var i = 2; i < cells.length; i += 2)
-        times.push($calc(cells[i].innerText));
+	var times = [], cells = document.getElementsByClassName("MPtimetable")[0].getElementsByTagName("td");
+	for(var i = 2; i < cells.length; i += 2)
+		times.push($calc(cells[i].innerText));
 });
