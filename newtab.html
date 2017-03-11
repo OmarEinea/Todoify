@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<!-- Vue Material style sheet -->
-		<link rel="stylesheet" href="css/vue-material.min.css">
+		<!-- Angular Material style sheet -->
+		<link rel="stylesheet" href="css/angular-material.min.css">
 		<!-- Font Awesome style sheet -->
 		<link rel="stylesheet" href="css/font-awesome.min.css">
 		<!-- My style sheet -->
@@ -12,51 +12,59 @@
 		<meta charset="utf-8">
 		<!-- Load MuslimPro Widget to Get Prayer Times -->
 		<script src="https://www.muslimpro.com/muslimprowidget.js?cityid=292672"></script>
-		<!-- Vue JavaScript Library -->
-		<script src="js/vue.min.js"></script>
-		<!-- Vue Material JavaScript Library -->
-		<script src="js/vue-material.min.js"></script>
+		<!-- Angular Material requires Angular.js Libraries -->
+		<script src="js/angular.min.js"></script>
+		<script src="js/angular-animate.min.js"></script>
+		<script src="js/angular-aria.min.js"></script>
+		<script src="js/angular-messages.min.js"></script>
+		<!-- Angular Material Library -->
+		<script src="js/angular-material.min.js"></script>
+		<!-- Angular Local Storage Library -->
+		<script src="js/angular-local-storage.min.js"></script>
+		<!-- Available Wallpapers -->
+		<script src="js/walls.js"></script>
+		<!-- Angular Application Script -->
+		<script src="js/app.js"></script>
 		<!-- Page title -->
 		<title>New Tab</title>
 	</head>
-	<body>
-		<div id="app">
-			
-			<div id="back" :style="{ backgroundImage: 'url(img/' + wall + ')' }"></div>
-			<div id="time">{{percent}}</div>
-		<!--div ng-controller="Prayer"></div-->
-			<span md-flex></span>
-			<div md-flex="initial" layout="column" layout-align="end stretch">
-				<md-card md-colors="::{background: 'grey-50'}">
-					<md-list-item v-for="todo in todos" class="md-2-line"><!-- ng-dblclick="remove($index)"-->
-						<div class="md-list-item-text" layout="column">
-							<h3>{{ todo.text }}</h3>
-							<p>{{ todo.date }}</p>
-						</div>
-					</md-list-item>
-				</md-card>
-				<md-fab-toolbar id="fab" md-open="state" md-direction="left">
-					<md-fab-trigger>
-						<md-button class="md-fab" md-colors="::{background: 'grey-50'}">
-							<md-icon md-colors="::{color: 'grey-700'}" md-font-icon="fa fa-pencil fa-lg"></md-icon>
-						</md-button>
-					</md-fab-trigger>
-					<md-toolbar @click="keepOpen()">
-						<md-fab-actions class="md-toolbar-tools">
-							<md-datepicker v-model="todo.date" md-is-open="open"></md-datepicker>
-							<form @submit="add()">
-								<md-input-container md-no-float class="md-block">
-									<input v-model="todo.text" type="text" placeholder="New Todo">
-								</md-input-container>
-							</form>
-						</md-fab-actions>
-					</md-toolbar>
-				</md-fab-toolbar>
-			</div>
+	<body ng-app="Todoify" layout="row" ng-cloak>
+		<style ng-controller="Background">
+			body {
+				background-image: url(img/{{ wall }});
+			}
+		</style>
+		<div id="time" ng-controller="Time">
+			{{ percent > 100 ? '+' + percent % 100 : percent }}
 		</div>
-		<!-- Available Wallpapers -->
-		<script src="js/walls.js"></script>
-		<!-- Vue Application Script -->
-		<script src="js/app.js"></script>
+		<div ng-controller="Prayer"></div>
+		<span flex></span>
+		<div ng-controller="Todos" flex="initial" layout="column" layout-align="end stretch">
+			<md-card md-colors="::{background: 'grey-50'}">
+				<md-list-item ng-repeat="todo in todos track by $index" class="md-2-line" ng-dblclick="remove($index)">
+					<div class="md-list-item-text" layout="column">
+						<h3>{{ todo.text }}</h3>
+						<p>{{ todo.date }}</p>
+					</div>
+				</md-list-item>
+			</md-card>
+			<md-fab-toolbar id="fab" md-open="state" md-direction="left">
+				<md-fab-trigger>
+					<md-button class="md-fab" md-colors="::{background: 'grey-50'}">
+						<md-icon md-colors="::{color: 'grey-700'}" md-font-icon="fa fa-pencil fa-lg"></md-icon>
+					</md-button>
+				</md-fab-trigger>
+				<md-toolbar ng-click="keepOpen()">
+					<md-fab-actions class="md-toolbar-tools">
+						<md-datepicker ng-model="todo.date" md-is-open="open"></md-datepicker>
+						<form ng-submit="add()">
+							<md-input-container md-no-float class="md-block">
+								<input ng-model="todo.text" type="text" placeholder="New Todo">
+							</md-input-container>
+						</form>
+					</md-fab-actions>
+				</md-toolbar>
+			</md-fab-toolbar>
+		</div>
 	</body>
 </html>

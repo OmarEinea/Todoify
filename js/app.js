@@ -1,43 +1,4 @@
-Vue.use(VueMaterial);
-var vue = new Vue({
-	el: "#app",
-	data() {
-		return {
-			percent: this.getPercent(),
-			wall: this.getWall(),
-			todos: [{"text":"Finish This Todo App","date":"Indefinite"},{"text":"Get The Driver License","date":"Indefinite"},{"text":"Get Beard Oil & Car Vacuum","date":"Indefinite"},{"text":"Collect Research Questions","date":"12/3"}],
-			todo: this.clearTodo(),
-			prayers: []
-		};
-	},
-	mounted() {
-		setInterval(this.getPercent, 30000);
-		
-		var cells = document.getElementsByClassName("MPtimetable")[0].getElementsByTagName("td");
-		for(var i = 2; i < cells.length; i += 2)
-			this.prayers.push(this.calcMins(cells[i].innerText));
-	},
-	methods: {
-		getWall() {
-			return this.wall = walls[Math.floor(Math.random() * walls.length)];
-		},
-		getPercent() {
-			var percent = Math.round(100 * (this.calcMins(new Date()) - this.calcMins("10:00")) / this.calcMins("13:30"));
-			return this.percent = percent > 100 ? '+' + percent % 100 : percent;
-		},
-		calcMins(time) {
-			if(typeof(time) == "string") {
-				time = time.split(":");
-				return +time[1] + time[0] * 60;
-			} else return time.getMinutes() + time.getHours() * 60;
-		},
-		clearTodo() {
-			return this.todo = { text: '', date: null};
-		}
-	}
-});
-
-/*angular.module("Todoify", ["ngMaterial", "LocalStorageModule"])
+angular.module("Todoify", ["ngMaterial", "LocalStorageModule"])
 
 .config(function($mdAriaProvider, localStorageServiceProvider) {
 	$mdAriaProvider.disableWarnings();
@@ -101,4 +62,4 @@ var vue = new Vue({
 	var times = [], cells = document.getElementsByClassName("MPtimetable")[0].getElementsByTagName("td");
 	for(var i = 2; i < cells.length; i += 2)
 		times.push($calc(cells[i].innerText));
-});*/
+});
